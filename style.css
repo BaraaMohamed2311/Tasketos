@@ -234,6 +234,7 @@ a{
     align-items: center;
     justify-content: center;
     position: relative;
+    overflow: hidden;
 }
 
 .bg-text,.bg-left,.bg-right{
