@@ -1,0 +1,207 @@
+.trip{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    background-color: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5rem 7.5vw;
+    gap: 2rem;
+    transition: 0.6s ease;
+    -webkit-transition: 0.6s ease;
+    -moz-transition: 0.6s ease;
+    -ms-transition: 0.6s ease;
+    -o-transition: 0.6s ease;
+}
+
+.img-box{
+    display: flex;
+    gap: 2rem;
+    margin: 8rem 0;
+    align-items: center;
+    color: var(--gem);
+    font-size: 2rem;
+}
+
+.notes{
+    color: white;
+    font-weight: bold;
+    padding: 0 0 0.5rem 0;
+    
+}
+
+.img-box  img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border: 1px solid white;
+    border-radius: 1rem;
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+}
+
+
+.trip .h4-wrapper{
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    animation: welcome 4s linear infinite;
+    -webkit-animation: welcome 4s linear infinite;
+}
+
+
+.trip-logo,.trip-logo::before,.trip-logo::after{
+    font-family: 'Press Start 2P', cursive;
+    word-spacing: -0.2rem;
+    
+}
+
+@keyframes welcome {
+    0%{
+        left: 40%;
+    }
+
+    50%{
+        left: 60%;
+    }
+
+    100%{
+        left: 40%;
+    }
+}
+
+
+
+.trip-logo{
+    letter-spacing: 0.1rem;
+    position: relative;
+}
+
+.trip-logo::before{
+    content: "Welcome To Tasketos";
+    position: absolute;
+    color: var(--light);
+    left: -0.2rem;
+    bottom: -0.2rem;
+    z-index: -1;
+}
+
+.trip-logo::after{
+    content: "Welcome To Tasketos";
+    position: absolute;
+    color: var(--main);
+    left: -0.4rem;
+    bottom: -0.4rem;
+    z-index: -2;
+}
+
+
+
+.login-sec {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main);
+    box-shadow: inset 1rem 1rem 6rem rgba(0, 0, 0, 0.337) ,inset -1rem -1rem 6rem rgba(0, 0, 0, 0.337);
+}
+
+.login-sec .wrapper{
+    height: 20rem;
+    width: 40rem;
+    border-radius: 1rem;
+    background-color: var(--dark);
+    -webkit-border-radius: 1rem;
+    -moz-border-radius: 1rem;
+    -ms-border-radius: 1rem;
+    -o-border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+    font-family: 'Press Start 2P', cursive;
+
+}
+
+.login-sec .wrapper .name-label{
+    animation:color 4s ease infinite ;
+    -webkit-animation:color 4s ease infinite ;
+}
+
+@keyframes color {
+    0%{
+        color: white;
+    }
+    25%{
+        color: var(--main);
+    }
+
+    50%{
+        color: var(--sec);
+    }
+
+    75%{
+        color: var(--main);
+    }
+
+    100%{
+        color: white;
+    }
+
+}
+
+.login-sec .wrapper .inp-name{
+    width: 100%;
+    outline: none;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    -webkit-border-radius: 0.5rem;
+    -moz-border-radius: 0.5rem;
+    -ms-border-radius: 0.5rem;
+    -o-border-radius: 0.5rem;
+}
+
+.login-sec .wrapper .inp-name:focus{
+    border: 2px solid var(--gem);
+}
+
+
+
+.login-sec .wrapper button , .trip button{
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: var(--main);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    -webkit-border-radius: 0.3rem;
+    -moz-border-radius: 0.3rem;
+    -ms-border-radius: 0.3rem;
+    border: 1px solid transparent;
+    -o-border-radius: 0.3rem;
+    transition: 0.6s ease;
+    -webkit-transition: 0.6s ease;
+    -moz-transition: 0.6s ease;
+    -ms-transition: 0.6s ease;
+    -o-transition: 0.6s ease;
+}
+
+
+.login-sec .wrapper button:hover , .trip button:hover{
+    
+    background-color: var(--sec);
+    color: white;
+    
+}

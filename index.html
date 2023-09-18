@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasketos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <nav class="nav-el">
+        <div class="wrapper">
+            <h3 class="logo"><a href="index.html">Tasketos</a></h3>
+            <div class="user">
+                <img class="user-img" src="imgs/inc1.JPG" alt="" ></img>
+                <h6 class="username">Anonymous</h6>
+                
+            </div>
+        </div>
+    </nav>
+
+    <div class="preloader">
+        <h3 class="logo">Tasketos</h3>
+        <div class="loading"><span class="loading-bar"></span></div>
+        <div class="motivate">Remember every day is a new day,Do not look behind :&#41;</div>
+    </div>
+
+    <section class="main">
+        <div class="bg-left"></div>
+        <h3 class="bg-text">Tasketos</h3>
+        <div class="bg-right"></div>
+        <div class="wrapper">
+
+            <div class="notification">
+                <i id="done" class="fa-regular fa-circle-check"></i>
+                <h3>Done</h3>
+                <h4></h4>
+                <button id="ok-btn">Ok</button>
+            </div>
+
+            <div class="task-box">
+                <div class="add-task-box">
+                    <input class="task-input" type="text" placeholder="Type a task" required>
+                    <input class="task-price" type="number" placeholder="Type price" required>
+                    <button class="add-btn"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div class="tasks-info">
+                    <div class="num-of-tasks">Number Of Tasks : <span></span></div>
+                    <div class="num-of-chances">Lives : <span id="lives-span"><i class="heart fa-solid fa-heart"></i><i class="heart fa-solid fa-heart"></i><i class="heart fa-solid fa-heart"></i></span></div>
+                    <div class="money"><i class="gem fa-regular fa-gem"></i> : <span id="earned">0</span> $</div>
+                </div>
+
+                <div class="tasks">
+                    
+                </div>
+            </div>
+
+            
+
+        </div>
+
+
+    </section>
+
+
+
+
+
+
+    <script src="js.js"></script>
+</body>
+</html>
