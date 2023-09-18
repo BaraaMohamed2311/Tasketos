@@ -22,7 +22,7 @@ const username_h6 = document.querySelector(".username");
 let username = localStorage.getItem("tasketos_user") ? JSON.parse(localStorage.getItem("tasketos_user")).name: "Anonymous";
 
 let interval = true;
-
+localStorage.clear()
 
 // if user didn't login load the login.html
 if(username !== "Anonymous"){
