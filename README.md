@@ -13,6 +13,7 @@ it provides a new way of achieving your daily tasks with better experience and m
 6. If you lose all hearts it will make you lose 2x times of money when canceling.
 
 --what did i use ? --
+0. You can change your username by clicking on it.
 1. Js time functions to track time.
 2. bubble sorting to sort tasks.
 3. localStorage to store your data so it won't be lost due to refreshig the website.
