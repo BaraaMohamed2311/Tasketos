@@ -21,7 +21,7 @@ num_of_tasks.innerHTML = tasks.length ;
 const username_h6 = document.querySelector(".username");
 let username = localStorage.getItem("tasketos_user") ? JSON.parse(localStorage.getItem("tasketos_user")).name: "Anonymous";
 
-let interval = true;
+
 
 
 // if user didn't login load the login.html
@@ -57,9 +57,7 @@ let stored_day;
 
 if(localStorage.getItem("stored_day")){
     stored_day = JSON.parse(localStorage.getItem("stored_day"));
-    console.log(stored_day )
-    console.log( today)
-    console.log(stored_day !== today)
+
     if(stored_day !== today){
         console.log("restarting");
         localStorage.removeItem("tasks");
@@ -189,30 +187,18 @@ function DoneBtn(btn,indx){
         
             count = 0;
             let interval1 = setInterval( function(){
-                let fixer = earned ; // to fix counting glitches
-                if((earned % 10 == 0)){
-                    count+=10 
-                    fixer-=10
-                    }
-                    else if((earned % 5 == 0)){
-                        count+=5 
-                        fixer-=5
-                        }
-                else if((earned % 2 == 0)){
-                count+=2 
-                fixer-=2
-                }
-                else {count++  ; fixer--} 
+                let fixer = earned ; // to fix counting glitches by speeding it
+                [count,fixer,earned] = speedingCounter(count,fixer,earned);  // destructing to change values outside speedingCounter
                
                 
-                if(count >= earned){
+                if(count >= earned || fixer  == 0){
                     clearInterval(interval1);
-                    interval = true;
+                    
                     noti_btn.style= `background-color:var(--main);`
                     noti_btn.onclick = function(){
                         noti.style = `opacity: 0;
                 pointer-events: none;`;
-                    clearInt = true;
+                    
                     }
                 }
                 
@@ -245,6 +231,9 @@ function DoneBtn(btn,indx){
     })
 }
 
+
+/*************************/
+
 function CancelBtn(btn,indx){
     let count = 0;
     noti_btn.style=`background-color:var(--dark);`
@@ -268,37 +257,25 @@ function CancelBtn(btn,indx){
         
             let count = 0;
             let interval2 = setInterval(function(){
-                let fixer = earned ; // to fix counting glitches
-                if((earned % 10 == 0)){
-                count+=10 
-                fixer-=10
-                }
-                else if((earned % 5 == 0)){
-                    count+=5 
-                    fixer-=5
-                    }
-                else if((earned % 2 == 0)){
-                count+=2 
-                fixer-=2
-                }
-                else {count++  ; fixer--} 
+                let fixer = earned ; // to fix counting glitches by speeding it
+                [count,fixer,earned] = speedingCounter(count,fixer,earned);
 
-                if( !interval){
+                
+                if(count >= earned || fixer  == 0){
                     clearInterval(interval2);
-                    return;
-                }
-                if(count >= earned ){
-                    clearInterval(interval2);
-                    interval = true;
+                    
                     noti_btn.style= `background-color:var(--main);`
                     noti_btn.onclick = function(){
                         noti.style = `opacity: 0;
                         pointer-events: none;`;
-                        interval = false;
+                        
                     }
                 }
                 
                 noti_h4.innerText = `- ${count}`;
+
+                if(hearts.length <= 0)
+                noti_h4.innerText = `- ${count} * 2`;
     
             },10);
 
@@ -309,7 +286,7 @@ function CancelBtn(btn,indx){
         if(hearts.length !== 0){
 
             earned_span.innerHTML = parseInt(earned_span.innerHTML) - earned; // losing cash
-            localStorage.earned = JSON.stringify(earned_span.innerHTML)
+            localStorage.earned = JSON.stringify(earned_span.innerHTML);
 
 
 
@@ -331,7 +308,8 @@ function CancelBtn(btn,indx){
             //double minus when no more hearts
 
             earned_span.innerHTML = parseInt(earned_span.innerHTML) - earned * 2; // 2x losing cash
-            localStorage.earned = JSON.stringify(earned_span.innerHTML)
+            localStorage.earned = JSON.stringify(earned_span.innerHTML);
+            
 
 
             hearts_span.innerHTML = '<i class="heart fa-solid fa-heart-crack"></i>'
@@ -342,8 +320,9 @@ function CancelBtn(btn,indx){
             noti_icon.setAttribute("id","cancel");
             noti_icon.setAttribute("class","fa-regular fa-circle-xmark");
             noti_h3.style = `font-size:0.8rem;`
-            noti_h3.innerHTML = `You Lost all hearts &#128531;, Do you want to start over?`
+            noti_h3.innerHTML = `You Lost all hearts &#128531;`
             noti_h4.innerHTML = `--Note : because of cancelled task will be minus 2x--`
+            
         }
         
 
@@ -366,6 +345,36 @@ window.addEventListener('load',function(){
         preloading.style=`opacity:0;pointer-events:none;`
     },2000);
 })
+
+
+
+
+
+function speedingCounter(count,fixer,earned){
+    if((earned % 100 == 0)){
+        count+=100 
+        fixer-=100
+        }
+
+    else if((earned % 10 == 0)){
+    count+=10 
+    fixer-=10
+    }
+    else if((earned % 5 == 0)){
+        count+=5 
+        fixer-=5
+        }
+    else if((earned % 2 == 0)){
+    count+=2 
+    fixer-=2
+    }
+    else {count++  ; fixer--} 
+
+    return [count,fixer,earned]
+}
+
+
+
 
 
 
@@ -408,4 +417,8 @@ setInterval(function(){
         img.setAttribute('src',"imgs/inc8.JPG")
     }
 }, 1000);
+
+
+
+
 
