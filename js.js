@@ -23,6 +23,20 @@ let username = localStorage.getItem("tasketos_user") ? JSON.parse(localStorage.g
 
 
 
+// preloading
+
+let preloading = document.querySelector(".preloader");
+let preloading_span = document.querySelector(".preloader .loading-bar");
+
+preloading_span.style = `animation:preload 2s ease infinite alternate ;
+-webkit-animation:preload 2s ease infinite alternate ;`;
+
+window.addEventListener('load',function(){
+    this.setTimeout(function(){
+        preloading.style=`opacity:0;pointer-events:none;`
+    },2000);
+})
+
 
 // if user didn't login load the login.html
 if(username !== "Anonymous"){
@@ -334,17 +348,8 @@ function CancelBtn(btn,indx){
     })
 }
 
-let preloading = document.querySelector(".preloader");
-let preloading_span = document.querySelector(".preloader .loading-bar");
 
-preloading_span.style = `animation:preload 2s ease infinite alternate ;
--webkit-animation:preload 2s ease infinite alternate ;`;
 
-window.addEventListener('load',function(){
-    this.setTimeout(function(){
-        preloading.style=`opacity:0;pointer-events:none;`
-    },2000);
-})
 
 
 
