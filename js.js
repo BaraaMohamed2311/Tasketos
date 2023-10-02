@@ -59,8 +59,14 @@ username_h6.addEventListener('click',function(){
 if(tasks)
 CreateTasksElement(tasks);
 
-if(hearts.length == 0)
-hearts_span.innerHTML = '<i class="heart fa-solid fa-heart-crack"></i>'
+if(hearts.length == 0){
+hearts_span.innerHTML = '<i class="heart fa-solid fa-heart-crack"></i>';
+}
+else {
+    hearts_span.innerHTML = hearts.map(function(){
+        return `<i class="heart fa-solid fa-heart"></i>`
+    }).join('')
+}
 
 
 // to reset everything for every day passes
