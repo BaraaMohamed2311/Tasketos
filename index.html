@@ -38,23 +38,31 @@
             <div class="notification">
                 <i id="done" class="fa-regular fa-circle-check"></i>
                 <h3>Done</h3>
-                <h4></h4>
+                <h4></h4><span id="counter"></span>
                 <button id="ok-btn">Ok</button>
             </div>
 
-            <div class="task-box">
+            <div class="main-box">
+
                 <div class="add-task-box">
-                    <input class="task-input" type="text" placeholder="Type a task" required>
-                    <input class="task-price" type="number" placeholder="Type price" required>
+                    <input class="task-input" type="text" placeholder="Task" required>
+                    <input class="task-price" type="number" placeholder="Price" required>
                     <button class="add-btn"><i class="fa-solid fa-plus"></i></button>
                 </div>
-                <div class="tasks-info">
-                    <div class="num-of-tasks">Number Of Tasks : <span></span></div>
-                    <div class="num-of-chances">Lives : <span id="lives-span"><i class="heart fa-solid fa-heart"></i><i class="heart fa-solid fa-heart"></i><i class="heart fa-solid fa-heart"></i></span></div>
-                    <div class="money"><i class="gem fa-regular fa-gem"></i> : <span id="earned">0</span> $</div>
-                </div>
 
+                <div class="tasks-info">
+                    <div class="alert" style = "color:red; font-weight:bold;"><h5>value must be less than 2500</h5></div>
+                    <div class="num-of-tasks">Number Of Tasks : <span></span></div>
+                        <div class="num-of-chances">
+                            Lives: 
+                        <span id="lives-span"></span>
+                        
+                    </div>
+                    <div class="money"><i class="gem fa-regular fa-gem"></i>: <span id="earned">0</span>$</div>
+                </div>
+                
                 <div class="tasks">
+                    
                     
                 </div>
             </div>

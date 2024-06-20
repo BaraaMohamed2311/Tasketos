@@ -39,10 +39,13 @@ button_form.addEventListener('click',function(e){
 
     e.preventDefault();
     if(inp_form.value !== ''){
-        let user = {
-            name : inp_form.value
+        let tasketos_user = {
+            name : inp_form.value,
+            hearts:["heart","heart","heart"],
+            earned:0,
+
         }
-        localStorage.tasketos_user = JSON.stringify(user);
+        localStorage.tasketos_user = JSON.stringify(tasketos_user);
         window.location.href = 'index.html';
     }
     
