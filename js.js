@@ -178,13 +178,12 @@ function displayCounter(count ,sign){
         if (displayingCount < count) {
             ++displayingCount 
             noti_counter.innerText = sign + `${displayingCount}$`;
-            
         } else {
             noti_btn.style.backgroundColor = 'var(--main)';
         }
     }
 
-    let updateCounter_timeout= setInterval(updateCounter, 100);
+    let updateCounter_timeout= setInterval(updateCounter, 10);
     
     noti_btn.onclick = function(){
         clearInterval(updateCounter_timeout)
@@ -277,26 +276,62 @@ function CreateTasksElement(tasks){
     gems_input.value = '';
 
     num_of_tasks.innerHTML = tasks.length ;
-    /// 
-    tasks_box.innerHTML = tasks.map(task =>{
-        return `<div class="task">
+    /***********************create a fragment then append it to box******************************/ 
+    /* this is what we are creating
+                <div class="task">
                     <span class="task-name">${task.task}</span> 
                     <span class="price">Price : ${task.priority}</span>
                     <div class="btns">
                             <button class="remove-task">Cancel</button> 
                             <button class="task-achieved">Done</button>
                         </div>
-                </div>`
-    }).join('')
+                </div>
+                 */
+
+    tasks_box.innerHTML = `` // first we reset box then we start adding tasks
+    const tasks_fragment = document.createDocumentFragment();
+
+        tasks.forEach(task => {
+            const taskDiv = document.createElement('div');
+            taskDiv.className = 'task';
+
+            const taskNameSpan = document.createElement('span');
+            taskNameSpan.className = 'task-name';
+            taskNameSpan.textContent = task.task;
+
+            const priceSpan = document.createElement('span');
+            priceSpan.className = 'price';
+            priceSpan.textContent = `Price : ${task.priority}`;
+
+            const btnsDiv = document.createElement('div');
+            btnsDiv.className = 'btns';
+
+            const removeTaskButton = document.createElement('button');
+            removeTaskButton.className = 'remove-task';
+            removeTaskButton.textContent = 'Cancel';
+
+            const taskAchievedButton = document.createElement('button');
+            taskAchievedButton.className = 'task-achieved';
+            taskAchievedButton.textContent = 'Done';
+
+            btnsDiv.appendChild(removeTaskButton);
+            btnsDiv.appendChild(taskAchievedButton);
+
+            taskDiv.appendChild(taskNameSpan);
+            taskDiv.appendChild(priceSpan);
+            taskDiv.appendChild(btnsDiv);
+
+            tasks_fragment.appendChild(taskDiv);
+        });
+
+        tasks_box.appendChild(tasks_fragment);
 
     // store tasks for refreshes
     localStorage.tasks = JSON.stringify(tasks);
     // accessing btns after insurring all tasks are rendered first
         Done_btns = document.querySelectorAll(" .task-achieved");
         Close_btns = document.querySelectorAll(" .remove-task")
-        console.log("helppp,",Done_btns,Close_btns)
 
-    console.log(Done_btns,Close_btns)
     Done_btns.forEach((btn,indx)=>{
         DoneBtn(btn,indx); // adds eventlistener
     })
@@ -328,8 +363,13 @@ function DoneBtn(btn,indx){
         noti_btn.style=`background-color:var(--dark);` // start with dark color till counter reaches max
 
         let earned = tasks[indx].priority;
-        earned_span.innerHTML = parseInt(earned_span.innerHTML) + earned; // adding cash
-        UpdateUser(user,"earned",earned_span.innerHTML)
+        // update balance
+        UpdateUser("balance", user["balance"] + earned);
+        // display balance
+        earned_span.innerHTML = user["balance"]; 
+        // checking level
+        UserLevel();
+        
         
             displayCounter(earned ,"+") // displays counter and notification box for it
             
@@ -341,6 +381,7 @@ function DoneBtn(btn,indx){
                 return index !== indx ;
             })
             CreateTasksElement(tasks);
+            
         
     })
 }
