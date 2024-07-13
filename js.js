@@ -194,30 +194,45 @@ function displayCounter(count ,sign){
 }
 
 
+/******************************************************************************************************/
+
+// update user properties
+function UpdateUser(keyParam , valueParam){
+
+    for (let key of Object.keys(user)){
+        if(key === keyParam){
+            user[keyParam] = valueParam;
+            break;
+        }
+        
+    }
+    // update user in localstorage
+    localStorage.setItem("user",JSON.stringify(user));
+    // get updated user
+    ExtractUserFromLocal();
+}
 
 
 
-
-
+/******************************************************************************************************/
 
 // For pressing enter instead of add btn
     [task_input , gems_input].forEach(element =>{
         element.addEventListener('keyup',function(e){
-            console.log(e.target.value)
             if(e.target == task_input)
             task_text = e.target.value;
             else if(e.target == gems_input)
             gems = e.target.value;
 
-            if(gems > 2500 ){
+            if(gems >= 2500 ){
                 
-                gemsAlert.classList.add("show");
+                gemsAlert.classList.remove("hide");
                 e.target.style= `color:red`;
                 }
                 
             else if(gems < 2500 || e.keyCode == 8){   // when pressing backspace
                 e.target.style= `color:red`;
-                gemsAlert.classList.remove("show");
+                gemsAlert.classList.add("hide");
                 e.target.style= `color:black`;
             }
 
@@ -240,12 +255,16 @@ add_btn.addEventListener('click',function(){
     gems = gems_input.value;
 
     if( task_text !== '' && gems !== '' && gems < 2500){
-        gemsAlert.style = `opacity:0; pointer-events:none;`;
+        gemsAlert.classList.add("hide");
         tasks.push({ task :task_text, priority:parseInt(gems) })
 
     if(tasks.length > 1)
     Sorting(tasks);
     CreateTasksElement(tasks);
+    }
+
+    else{
+        gemsAlert.classList.remove("hide");
     }
 
     

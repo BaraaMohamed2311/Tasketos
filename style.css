@@ -8,6 +8,7 @@
 .wrapper{
     width: 85vw;
     margin: 0 7.5vw;
+    position: relative;
 }
 
 body{
@@ -16,6 +17,14 @@ body{
     height: 100vh;
     user-select: none;
     overflow: hidden;
+}
+
+#audio{
+    position: absolute;
+    left: 2rem;
+    bottom: 2rem;
+    z-index: 100;
+
 }
 
 a{
@@ -541,7 +550,7 @@ a{
 }
 
 .alert {
-    opacity: 0;
+
     background-color: white;
     pointer-events: none;
     position: absolute;
@@ -561,8 +570,8 @@ a{
 
 }
 
-.show{
-    opacity: 1;
+.hide{
+    opacity: 0;
 }
 
 
