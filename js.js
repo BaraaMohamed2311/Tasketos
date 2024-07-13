@@ -1,129 +1,175 @@
-let task_input = document.querySelector(".add-task-box input");
-const add_btn = document.querySelector(".add-task-box button");
-let gems_input = document.querySelector(".add-task-box .task-price")
+import ImageOnTime from "./utils/ImageOnTime.js";
+import ActivateAudio from "./utils/ActivateAudio.js";
+
+/**************************User Info****************************************/
+const username_h6 = document.querySelector(".username");
+const userLevel_h6 = document.querySelector("#level");
+
+/************************Tasks input***************************************/
 const tasks_box = document.querySelector(".main-box .tasks");
+const task_input = document.querySelector(".add-task-box input");
+const gems_input = document.querySelector(".add-task-box .task-price");
+const add_btn = document.querySelector(".add-task-box button");
+
+/************************Tasks info***************************************/
+const earned_span = document.querySelector("#earned");
+const hearts_span_wrapper = document.querySelector("#lives-span");
+const num_of_tasks = document.querySelector(".num-of-tasks span");
+
+/************************Notification PopUp***************************************/
+const noti_box = document.querySelector(".notification")
+const noti_counter =   document.querySelector("#counter");
+const noti_icon = document.querySelector(".notification i");
+const noti_h4 = document.querySelector(".notification h4");
+const noti_btn = document.querySelector(".notification button");
+const gemsAlert = document.querySelector(".alert");
+
+
 
 let task_text ,gems;
 let Done_btns,Close_btns ;
-const earned_span = document.querySelector("#earned");
-const hearts_span_wrapper = document.querySelector("#lives-span");
-let noti_box = document.querySelector(".notification")
-let noti_counter =   document.querySelector("#counter");
-let noti_icon = document.querySelector(".notification i");
-let noti_h4 = document.querySelector(".notification h4");
-let noti_btn = document.querySelector(".notification button");
-
-let num_of_tasks = document.querySelector(".num-of-tasks span");
-const username_h6 = document.querySelector(".username");
 
 
-// get from local storage
-let user = JSON.parse(localStorage.getItem("tasketos_user"));
-let username = user? user["name"] :"Anonymous";
-let earned = user? user["earned"] :0;
-let hearts = user? user["hearts"]:["heart","heart","heart"];
-let tasks = JSON.parse(localStorage.getItem("tasks")) ? JSON.parse(localStorage.getItem("tasks")) : [];
-num_of_tasks.innerHTML = tasks.length ;
 
 
-earned_span.innerHTML = earned;
-
-const gemsAlert = document.querySelector(".alert");
 // day checking variables
 let today = new Date().getDate();
 let stored_day;
 
-
-
-
-
-
-
-/**************************************************************Preloader & directing to login***********************************************************/
-
-let preloading = document.querySelector(".preloader");
-let preloading_span = document.querySelector(".preloader .loading-bar");
-
-preloading_span.style = `animation:preload 2s ease infinite alternate ;
--webkit-animation:preload 2s ease infinite alternate ;`;
-
-window.addEventListener('load',function(){
-    this.setTimeout(function(){
-        preloading.style=`opacity:0;pointer-events:none;`
-    },1200);
-})
-
-
-// if user didn't login load the login.html
-if(username !== "Anonymous"){
-    username_h6.innerHTML = username;
-    
-}
-
-else{
-    window.location.href = 'login.html'
-}
-
-
-
-username_h6.addEventListener('click',function(){
-    window.location.href = 'login.html'
-})
-
-
 /**************************************************************initializing vars & Ui elements***********************************************************/
-// Check if a day passed if yes remove yesterday's tasks
-if(localStorage.getItem("stored_day")){
-    stored_day = JSON.parse(localStorage.getItem("stored_day"));
-    // if we aren't on the same day we remove all tasks
-    if(stored_day !== today){
-        localStorage.removeItem("tasks");
-        tasks_box.innerHTML = ''
-        localStorage.stored_day = JSON.stringify(today);
+
+// Extract User data on Refresh
+let user;
+let username ,hearts , balance , level;
+
+function ExtractUserFromLocal(){
+    user = localStorage.getItem("user") ? JSON.parse(localStorage.getItem("user")) : undefined;
+
+    if(user){
+        username = user["name"];
+        hearts =user["hearts"];
+        balance = parseInt(user["balance"]);
+        level = user["level"];
     }
-    
-}
-else{
-    localStorage.stored_day = JSON.stringify(today);
-}
-// create tasks if it was existed before and a day didn't pass
-if(tasks)
-CreateTasksElement(tasks);
+    else{
+        username= "Anonymous";
+        hearts =["heart","heart","heart"];
+        balance = 0;
+    }
+}ExtractUserFromLocal();
 
-// check if earned money exists
-
-// Generate Hearts function
+// Generate Hearts on Refresh
 function GenerateHearts(heartsArray){
     
-    if( heartsArray.length === 0){
-  
-        hearts_span_wrapper.innerHTML = '<i class="heart fa-solid fa-heart-crack"></i>';
-        }
+        if( heartsArray.length === 0){
+            hearts_span_wrapper.innerHTML = '<i class="heart fa-solid fa-heart-crack"></i>';
+            }
         else {
             hearts_span_wrapper.innerHTML = heartsArray.map(function(){
                 return `<i class="heart fa-solid fa-heart"></i>`
             }).join('')
         }
-}
+}GenerateHearts(hearts); // first call on login
 
-GenerateHearts(hearts); // first call on login
+// Get user balance on Refresh
+(function GetUserBalance(){
+    earned_span.textContent = balance;
+})()
 
-
-// update user properties
-function UpdateUser(user , keyParam , valueParam){
-    
-    for (let key of Object.keys(user)){
-        if(key === keyParam){
-            user[keyParam] = valueParam;
-        }
-        break;
+function UserLevel(){
+    let currLevel = level;
+    if(balance < 1000){
+        level= `--Noob--`;
+        userLevel_h6.textContent = `--Noob--`;
+        userLevel_h6.style = `color:#55c10a;`
     }
-    // update localstorage
-    localStorage.setItem("user",JSON.stringify(user));
-}
+    else if(balance > 1000 && balance <= 10000){
+        console.log("enthusiastic triggerred")
+        level= `--Enthusiastic--`;
+        userLevel_h6.textContent = `--Enthusiastic--`;
+        userLevel_h6.style = `color:#e3bc0c;`
+    }
+
+    else if(balance > 10000 && balance <= 50000){
+        console.log("Commitment triggerred")
+        level= `--Commitment--`;
+        userLevel_h6.textContent = `--Commitment--`;
+        userLevel_h6.style = `color:#ee4200;`
+    }
+    else if(balance > 50000 ){
+        level= `--Legend--`;
+        userLevel_h6.textContent = `--Legend--`;
+        userLevel_h6.style = `color:#5015ff;`
+    }
+    if(currLevel !== level)
+        UpdateUser("level" , level);
+    
+    
+}UserLevel();
+
+
+
+    // Check if a day passed if yes remove yesterday's tasks
+    if(localStorage.getItem("stored_day")){
+        stored_day = JSON.parse(localStorage.getItem("stored_day"));
+        // if we aren't on the same day we remove all tasks
+        if(stored_day !== today){
+            localStorage.removeItem("tasks");
+            tasks_box.innerHTML = ''
+            localStorage.stored_day = JSON.stringify(today);
+        }
+        
+    }
+    else{
+        localStorage.stored_day = JSON.stringify(today);
+    }
+
+    // Extract tasks 
+    let tasks = JSON.parse(localStorage.getItem("tasks")) ? JSON.parse(localStorage.getItem("tasks")) : [];
+    num_of_tasks.innerHTML = tasks.length ;
+    // Display tasks
+    if(tasks)
+        CreateTasksElement(tasks);
+
+
+
+
+    /***Directing too page depending on user extracted from local***/
+        let preloading = document.querySelector(".preloader");
+        let preloading_span = document.querySelector(".preloader .loading-bar");
+
+        preloading_span.style = `animation:preload 2s ease infinite alternate ;
+        -webkit-animation:preload 2s ease infinite alternate ;`;
+
+        window.addEventListener('load',function(){
+            this.setTimeout(function(){
+                preloading.style=`opacity:0;pointer-events:none;`
+            },1200);
+        })
+
+
+        // if user didn't login load the login.html
+        if(username !== "Anonymous"){
+            username_h6.innerHTML = username;
+            
+        }
+
+        else{
+            window.location.href = 'login.html'
+        }
+
+
+
+        username_h6.addEventListener('click',function(){
+            window.location.href = 'login.html'
+        })
+    
+
+/******************************************************************************************************/
+
+// Counter Popup
 
 function displayCounter(count ,sign){
-    console.log(sign)
     // display notific box
     noti_box.style = `opacity: 1;
             pointer-events: all;`;
@@ -243,34 +289,17 @@ function CreateTasksElement(tasks){
 
 
 /********************************/
-// bubble sorting 
 
+//  sorting  Task on it's priority
 function Sorting(arr){
-    for(let i =0; i < arr.length  ; i++){
-        for(let j = 0 ; j < arr.length - 1  ; j++){
-            if(arr[j].priority < arr[j+1].priority){
-                swap(arr , j , j+1);
-            }
-        }
-    }
-
-    //checks if more sorting needed
-    for(let j = 0 ; j < arr.length - 1 ; j++){
-            if(arr[j] < arr[j+1]){
-                Sorting(arr)
-            }
-        }
-
+    // descending order
+    arr.sort((b , a) => a.priority - b.priority);
 }
-
 /********************************/
 function swap(arr , index1 , index2){
-    
     let temp = arr[index1];
     arr[index1]= arr[index2];
     arr[index2] = temp;
-
-
 }
 
 /********************************/
@@ -303,60 +332,55 @@ function DoneBtn(btn,indx){
 function CancelBtn(btn,indx){
     
     btn.addEventListener('click',function(){
-        if(hearts.length !== 0 ) 
-            hearts.pop(); // deleting a heart
-            
-        GenerateHearts(hearts)
-        UpdateUser(user , "hearts", hearts)
-        
-        noti_btn.style=`background-color:var(--dark);` // start with dark color till counter reaches max
 
-        let earned = tasks[indx].priority;
+        
+        /*******update hearts*******/
+        if(hearts.length > 0)
+            hearts.pop();// remove a heart
+        UpdateUser("hearts", hearts); // update localstorage
+        GenerateHearts(hearts) // redisplay hearts
+        /**********************************************************/
+        noti_btn.style=`background-color:var(--dark);` // start with dark color till counter reaches max
+        /**************remove canceled task***************/
+        let loss = tasks[indx].priority; // store task price before removing it
         tasks = tasks.filter((task,index) =>{
             return index !== indx ;
-        }) 
+        }) ;
         CreateTasksElement(tasks); // regenerate tasks
-        //activate counter
-        displayCounter(earned  ,"-")
-                
+        /**********************************************************/
 
         // if there is hearts so no double minus
         if(hearts.length !== 0){
-            earned_span.innerHTML = parseInt(earned_span.innerHTML) - earned; // losing cash
-            UpdateUser(user,"earned",earned_span.innerHTML)
+            // update balance
+            UpdateUser("balance", user["balance"] - loss);
+            //activate counter
+            displayCounter(loss  ,"-")
             
-            console.log("entered if inside cancel")
             noti_icon.setAttribute("id","cancel");
             noti_icon.setAttribute("class","fa-regular fa-circle-xmark");
             noti_h4.innerText = "Canceled"
             
         }
-        else{ // else if no hearts 
-            //double minus when no more hearts
-            earned_span.innerHTML = parseInt(earned_span.innerHTML) - earned * 2; // 2x losing cash
-            UpdateUser(user,"earned",earned_span.innerHTML)
-            noti_icon.setAttribute("id","cancel");
-            noti_icon.setAttribute("class","fa-regular fa-circle-xmark");
-            noti_h4.style = `font-size:0.8rem;`
-            noti_h4.innerHTML = `You Lost all hearts &#128531;`
+        else{ 
+                /* if no hearts left we double minus */
+                UpdateUser("balance", user["balance"] - loss * 2);
+                //activate counter
+                displayCounter(loss * 2  ,"-")
+                
+                noti_icon.setAttribute("id","cancel");
+                noti_icon.setAttribute("class","fa-regular fa-circle-xmark");
+                noti_h4.style = `font-size:0.8rem;`
+                noti_h4.innerHTML = `You Lost all hearts &#128531;`
             
         }
+
+        // display balance
+        earned_span.innerHTML = user["balance"]; 
+        // checking level
+        UserLevel();
     })
 }
 
-
-
-
-
-
-
-
-function speedingCounter(count){
-
-    /**Used to fix issue of taking much time to reach the expected value */
-    
-    
-}
 
 
 /***********************************User Img********************************************/
@@ -364,44 +388,10 @@ let img = document.querySelector(".user-img");
 let hour = new Date().getHours();
 const timeOut = 5400000 // hour and half
 
-setInterval(function(){
-    hour = new Date().getHours();
-    if(hour >= 6 && hour < 9){
-    img.setAttribute('src',"imgs/inc1.JPG")
-    }
-    
-    else if(hour >= 9 && hour < 12){
-        img.setAttribute('src',"imgs/inc2.JPG")
-    }
-    
-    
-    else if(hour >= 12 && hour < 15){
-        img.setAttribute('src',"imgs/inc3.JPG")
-    }
-    
-    else if(hour >= 15 && hour < 18){
-        img.setAttribute('src',"imgs/inc4.JPG")
-    }
-    
-    else if(hour >= 18 && hour < 21){
-        img.setAttribute('src',"imgs/inc5.JPG")
-    }
-    
-    else if(hour >= 21 && hour < 24){
-        img.setAttribute('src',"imgs/inc6.JPG")
-    }
-    
-    else if(hour >= 24 && hour < 2){
-        img.setAttribute('src',"imgs/inc7.JPG")
-    }
-    
-    else if(hour >= 2 && hour < 6){
-        
-        img.setAttribute('src',"imgs/inc8.JPG")
-    }
-}, timeOut);
+setInterval(ImageOnTime, timeOut);
 
 
-
+/*******************************************************************************************/
+ActivateAudio()
 
 

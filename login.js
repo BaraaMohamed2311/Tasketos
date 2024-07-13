@@ -39,52 +39,24 @@ button_form.addEventListener('click',function(e){
 
     e.preventDefault();
     if(inp_form.value !== ''){
-        let tasketos_user = {
-            name : inp_form.value,
-            hearts:["heart","heart","heart"],
-            earned:0,
+        let user = {
+            "name" : inp_form.value,
+            "hearts":["heart","heart","heart"],
+            "balance":0,
+            "level":"--Noob--"
 
         }
-        localStorage.tasketos_user = JSON.stringify(tasketos_user);
+        localStorage.user = JSON.stringify(user);
         window.location.href = 'index.html';
     }
     
 })
 
 let img = document.querySelector(".user-img");
+const timeOut = 5400000 // hour and half
 
-setInterval(function(){
-    let hour = new Date().getHours();
-    if(hour < 3){
-    img.setAttribute('src',"imgs/inc1.JPG")
-    }
-    
-    else if(hour >= 3 && hour < 6){
-        img.setAttribute('src',"imgs/inc2.JPG")
-    }
-    
-    
-    else if(hour >= 6 && hour < 9){
-        img.setAttribute('src',"imgs/inc3.JPG")
-    }
-    
-    else if(hour >= 9 && hour < 12){
-        img.setAttribute('src',"imgs/inc4.JPG")
-    }
-    
-    else if(hour >= 12 && hour < 15){
-        img.setAttribute('src',"imgs/inc5.JPG")
-    }
-    
-    else if(hour >= 15 && hour < 18){
-        img.setAttribute('src',"imgs/inc6.JPG")
-    }
-    
-    else if(hour >= 18 && hour < 21){
-        img.setAttribute('src',"imgs/inc7.JPG")
-    }
-    
-    else if(hour >= 21 && hour < 24){
-        img.setAttribute('src',"imgs/inc8.JPG")
-    }
-},1000);
+setInterval(ImageOnTime,timeOut);
+
+/*********************Audio*****************************/
+ActivateAudio();
+/******************************************************/
