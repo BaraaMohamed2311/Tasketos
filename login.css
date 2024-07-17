@@ -175,7 +175,7 @@
 }
 
 .login-sec .wrapper{
-    height: 20rem;
+    height: 16rem;
     width: 40rem;
     border-radius: 1rem;
     background-color: var(--dark);
@@ -187,7 +187,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 3rem;
+    gap: 2rem;
     font-family: 'Press Start 2P', cursive;
     
 
@@ -198,27 +198,6 @@
     -webkit-animation:color 4s ease infinite ;
 }
 
-@keyframes color {
-    0%{
-        color: white;
-    }
-    25%{
-        color: var(--main);
-    }
-
-    50%{
-        color: var(--sec);
-    }
-
-    75%{
-        color: var(--main);
-    }
-
-    100%{
-        color: white;
-    }
-
-}
 
 .login-sec .wrapper .inp-name{
     width: 100%;
@@ -229,6 +208,9 @@
     -moz-border-radius: 0.5rem;
     -ms-border-radius: 0.5rem;
     -o-border-radius: 0.5rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    
 }
 
 .login-sec .wrapper .inp-name:focus{
@@ -262,6 +244,29 @@
     background-color: var(--sec);
     color: white;
     
+}
+
+
+@keyframes color {
+    0%{
+        color: white;
+    }
+    25%{
+        color: var(--main);
+    }
+
+    50%{
+        color: var(--sec);
+    }
+
+    75%{
+        color: var(--main);
+    }
+
+    100%{
+        color: white;
+    }
+
 }
 
 
