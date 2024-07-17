@@ -55,6 +55,7 @@ function ExtractUserFromLocal(){
         username= "Anonymous";
         hearts =["heart","heart","heart"];
         balance = 0;
+        window.location.href =  "login.html"; //  navigate to login page
     }
 }ExtractUserFromLocal();
 
@@ -197,7 +198,7 @@ function displayCounter(count ,sign){
 
 // update user properties
 function UpdateUser(keyParam , valueParam){
-
+    
     for (let key of Object.keys(user)){
         if(key === keyParam){
             user[keyParam] = valueParam;
