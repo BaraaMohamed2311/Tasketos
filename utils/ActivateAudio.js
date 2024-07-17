@@ -9,7 +9,7 @@ export default function ActivateAudio(){
 
     let audio = new Audio("./imgs/monkey.mp3")
     audio.loop = true;
-    console.log("clickedddd", audio_icon)
+    
     audio_icon.addEventListener('click',function(){
         
         if( AudioMode ==="stopped"){

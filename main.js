@@ -84,14 +84,14 @@ function UserLevel(){
         userLevel_h6.style = `color:#55c10a;`
     }
     else if(balance > 1000 && balance <= 10000){
-        console.log("enthusiastic triggerred")
+        
         level= `--Enthusiastic--`;
         userLevel_h6.textContent = `--Enthusiastic--`;
         userLevel_h6.style = `color:#e3bc0c;`
     }
 
     else if(balance > 10000 && balance <= 50000){
-        console.log("Commitment triggerred")
+        
         level= `--Commitment--`;
         userLevel_h6.textContent = `--Commitment--`;
         userLevel_h6.style = `color:#ee4200;`
