@@ -7,14 +7,8 @@ pipeline {
                 // Use the AWS credentials and SSH key
                 withCredentials([
                 aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'baraamohamed2311_aws_creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'),
-                file(credentialsId: 'NewPrivateApp', variable: 'NewPrivateApp'), 
-                file(credentialsId: 'BASTION_DEV_ACCESS', variable: 'Dev_Access')]) {
+                file(credentialsId: 'NewPrivateApp', variable: 'NewPrivateApp')]) {
                     script {
-	                    // SSH to Bastion
-		                sh '''
-							chmod 400 "$Dev_Access"
-							ssh -i "$Dev_Access" ubuntu@ec2-35-175-253-129.compute-1.amazonaws.com
-						'''
                         // First EC2 instance
                         sh '''
                             chmod 400 "$NewPrivateApp"
