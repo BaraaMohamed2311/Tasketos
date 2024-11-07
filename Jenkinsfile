@@ -13,7 +13,7 @@ pipeline {
                         // First EC2 instance
                         sh '''
                             chmod 400 "$NewPrivateApp"
-                            ssh -i "$NewPrivateApp" ubuntu@10.0.2.227 << EOF
+                            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "$NewPrivateApp" ubuntu@10.0.2.227 << EOF
                                 cd /var/www/html
                                 sudo git clone https://github.com/BaraaMohamed2311/Tasketos.git
                                 sudo systemctl restart apache2
@@ -23,7 +23,7 @@ pipeline {
                         // Second EC2 instance
                         sh '''
 		                    chmod 400 "$NewPrivateApp"
-                            ssh -i "$NewPrivateApp" ubuntu@10.0.3.189 << EOF
+                            ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i "$NewPrivateApp" ubuntu@10.0.3.189 << EOF
                                 cd /var/www/html
                                 sudo git clone https://github.com/BaraaMohamed2311/Tasketos.git
                                 sudo systemctl restart apache2
