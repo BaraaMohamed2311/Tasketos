@@ -22,7 +22,7 @@ pipeline {
 
                         // Second EC2 instance
                         sh '''
-		                        chmod 400 "$NewPrivateApp"
+		                    chmod 400 "$NewPrivateApp"
                             ssh -i "$NewPrivateApp" ubuntu@10.0.3.189 << EOF
                                 cd /var/www/html
                                 sudo git clone https://github.com/BaraaMohamed2311/Tasketos.git
