@@ -9,10 +9,11 @@ pipeline {
                 aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'baraamohamed2311_aws_creds', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'),
                 file(credentialsId: 'NewPrivateApp', variable: 'NewPrivateApp')]) {
                     script {
+                    /*  We are running this script on ec2 so we do not need to ssh to bastion first   */
                         // First EC2 instance
                         sh '''
                             chmod 400 "$NewPrivateApp"
-                            ssh -i "$NewPrivateApp" ubuntu@ec2-35-175-253-129.compute-1.amazonaws.com << EOF
+                            ssh -i "$NewPrivateApp" ubuntu@10.0.2.227 << EOF
                                 cd /var/www/html
                                 sudo git clone https://github.com/BaraaMohamed2311/Tasketos.git
                                 sudo systemctl restart apache2
