@@ -1,4 +1,4 @@
-// This Jenkinsfile is used to access two EC2 instances and update the cosde by cloning a Git repository.
+// is it updated
 pipeline {
     agent any
 
