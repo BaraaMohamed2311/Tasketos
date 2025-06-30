@@ -1,3 +1,4 @@
+// This Jenkinsfile is used to access two EC2 instances and update the code by cloning a Git repository.
 pipeline {
     agent any
 
