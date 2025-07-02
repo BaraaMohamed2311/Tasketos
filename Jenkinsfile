@@ -1,4 +1,4 @@
-// File: Jenkinsfile
+// File
 pipeline {
     agent any
     options { skipDefaultCheckout() }
