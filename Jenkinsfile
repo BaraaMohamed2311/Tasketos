@@ -1,7 +1,7 @@
 // File
 pipeline {
     agent any
-    options { skipDefaultCheckout() }
+
     stages{
 
         stage('Build Main Pipe'){
